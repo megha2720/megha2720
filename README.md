@@ -1,16 +1,31 @@
-## Hi there 👋
+# 👋 Hi, I'm [Megha Nair]  
 
-<!--
-**megha2720/megha2720** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+💡 **Data Analyst | Aspiring Data Scientist | 5+ Years of Experience**  
 
-Here are some ideas to get you started:
+I specialize in transforming data into actionable insights using **Python, Machine Learning, Power BI, SQL, and Excel**.  
+Recently completed a **Data Scientist Certification from DataMites**, where I gained expertise in predictive modeling, advanced analytics, and end-to-end data science workflows.  
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+---
+
+## 🔧 Skills & Tools  
+- **Programming & Analytics**: Python (Pandas, NumPy, Scikit-learn), SQL, Excel  
+- **Visualization**: Power BI, Matplotlib, Seaborn  
+- **Machine Learning**: Regression, Classification, Time Series Forecasting, Random Forest, XGBoost  
+- **Databases**: MySQL  
+- **Other**: Data Cleaning, ETL, Dashboarding, Statistical Analysis  
+
+---
+
+## 📂 Featured Projects  
+- 📊 **Inventory Forecasting Model** – Predicting spare parts demand using Random Forest & XGBoost  
+- 📈 **Power BI Sales Dashboard** – Interactive KPIs & business performance visualization  
+- 🤖 **Customer Churn Prediction** – ML model to identify at-risk customers  
+- 🧮 **Excel Automation** – Streamlining reporting with advanced formulas & VBA  
+
+👉 Check out my repositories for more!  
+
+---
+
+## 🎓 Certifications  
+- 🎖️ Data Scientist Certification – *DataMites*  
+
