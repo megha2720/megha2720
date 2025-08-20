@@ -8,11 +8,10 @@ Recently completed a **Data Scientist Certification from DataMites**, where I ga
 ---
 
 ## 🔧 Skills & Tools  
-- **Programming & Analytics**: Python (Pandas, NumPy, Scikit-learn), SQL, Excel  
-- **Visualization**: Power BI, Matplotlib, Seaborn  
-- **Machine Learning**: Regression, Classification, Time Series Forecasting, Random Forest, XGBoost  
-- **Databases**: MySQL  
-- **Other**: Data Cleaning, ETL, Dashboarding, Statistical Analysis  
+- **Programming & Databases**: Python (Intermediate), SQL Server, MySQL  
+- **Data Analysis & Visualization**: Power BI, Excel  
+- **Machine Learning**: Regression, Classification, Forecasting  
+- **Other**: MIS Reporting, Stakeholder Management, Project Implementation  
 
 ---
 
@@ -25,6 +24,12 @@ Recently completed a **Data Scientist Certification from DataMites**, where I ga
 👉 Check out my repositories for more!  
 
 ---
+
+## 🎓 Education  
+- **M.Sc. Information Technology**, Mumbai University (2010 – 2012)  
+- **B.Sc. Information Technology**, Mumbai University (2007 – 2010)
+
+  
 
 ## 🎓 Certifications  
 - 🎖️ Data Scientist Certification – *DataMites*  
