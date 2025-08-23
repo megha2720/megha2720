@@ -1,6 +1,6 @@
 # 👋 Hi, I'm [Megha Nair]  
 
-💡 **Data Analyst | Aspiring Data Scientist | 5+ Years of Experience**  
+💡 **Data Analyst | 4+ Years of Experience | Certified Data Scientist**  
 
 I specialize in transforming data into actionable insights using **Python, Machine Learning, Power BI, SQL, and Excel**.  
 Recently completed a **Data Scientist Certification from DataMites**, where I gained expertise in predictive modeling, advanced analytics, and end-to-end data science workflows.  
