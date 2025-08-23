@@ -1,9 +1,9 @@
 # 👋 Hi, I'm [Megha Nair]  
 
-💡 **Data Analyst | 4+ Years of Experience | Certified Data Scientist**  
+💡 I am a **Senior Counsellor with 4 years of experience** in the overseas education sector, where I guided students through admissions and visa processes while managing large databases and reports.  
+Alongside this, I built strong skills in **SQL, Power BI, Excel, and Data Analysis** to create dashboards, track KPIs, and improve processes.  
 
-I specialize in transforming data into actionable insights using **Python, Machine Learning, Power BI, SQL, and Excel**.  
-Recently completed a **Data Scientist Certification from DataMites**, where I gained expertise in predictive modeling, advanced analytics, and end-to-end data science workflows.  
+Certified in **Data Science (Datamites, IABAC Certified)** with hands-on knowledge of **Python and Machine Learning**, I am now transitioning into a **Data Analyst role** where I can apply my technical skills to deliver insights and support data-driven decisions.  
 
 ---
 
