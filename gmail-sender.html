@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gmail Sender</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --accent: #d4f064;
+    --accent-dim: #a8c04e;
+    --text: #f0f0f0;
+    --text-muted: #888;
+    --text-dim: #555;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --radius: 10px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .header {
+    margin-bottom: 2.5rem;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header h1 .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .header p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-family: var(--mono);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-label {
+    font-size: 0.7rem;
+    font-family: var(--mono);
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 1.2rem;
+  }
+
+  .field {
+    margin-bottom: 1.2rem;
+  }
+
+  .field label {
+    display: block;
+    font-size: 0.75rem;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .field input, .field textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+
+  .field input:focus, .field textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .field textarea { min-height: 120px; line-height: 1.6; }
+
+  .btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--accent);
+    color: #0d0d0d;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.04em;
+  }
+
+  .btn:hover { background: var(--accent-dim); }
+  .btn:active { transform: scale(0.99); }
+  .btn:disabled { background: var(--border); color: var(--text-dim); cursor: not-allowed; }
+
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+  }
+  .btn-secondary:hover { border-color: var(--text-muted); background: var(--surface2); }
+
+  .status {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-top: 1rem;
+    display: none;
+  }
+  .status.success { background: #1a2e0a; border: 1px solid #3a5a1a; color: #a8e06a; display: block; }
+  .status.error { background: #2e0a0a; border: 1px solid #5a1a1a; color: #e06a6a; display: block; }
+  .status.info { background: #0a1a2e; border: 1px solid #1a3a5a; color: #6aaae0; display: block; }
+
+  /* Setup section */
+  #setup-section { display: block; }
+  #app-section { display: none; }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .step-content { flex: 1; }
+  .step-content strong { font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 4px; color: var(--text); }
+  .step-content p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; }
+  .step-content a { color: var(--accent); text-decoration: none; }
+  .step-content a:hover { text-decoration: underline; }
+  .step-content code {
+    font-family: var(--mono);
+    background: var(--surface2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    color: var(--accent);
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.5rem 0;
+  }
+
+  .credentials-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .user-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .user-badge .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #0d0d0d;
+  }
+
+  .user-badge span { font-family: var(--mono); font-size: 0.8rem; color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1><span class="dot"></span> Gmail Sender</h1>
+    <p>// send emails directly via Gmail API</p>
+  </div>
+
+  <!-- SETUP SECTION -->
+  <div id="setup-section">
+    <div class="card">
+      <div class="card-label">// one-time setup</div>
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Create a Google Cloud Project</strong>
+          <p>Go to <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a>, create a new project, then enable the <strong>Gmail API</strong> under APIs & Services.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Create OAuth 2.0 Credentials</strong>
+          <p>Go to <strong>APIs & Services → Credentials → Create Credentials → OAuth client ID</strong>. Choose <code>Web application</code>. Under Authorized redirect URIs, add: <code id="redirect-uri"></code></p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Add your Gmail as a test user</strong>
+          <p>Go to <strong>OAuth consent screen → Test users</strong> and add <code>meghapradhu@gmail.com</code>.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Enter your credentials below</strong>
+          <p>Paste your Client ID and Client Secret from the credentials page.</p>
+        </div>
+      </div>
+
+      <hr class="divider"/>
+
+      <div class="credentials-grid">
+        <div class="field">
+          <label>CLIENT ID</label>
+          <input type="text" id="client-id" placeholder="xxxx.apps.googleusercontent.com"/>
+        </div>
+        <div class="field">
+          <label>CLIENT SECRET</label>
+          <input type="password" id="client-secret" placeholder="GOCSPX-..."/>
+        </div>
+      </div>
+
+      <button class="btn" onclick="startOAuth()">Connect Gmail Account →</button>
+      <div id="setup-status" class="status"></div>
+    </div>
+  </div>
+
+  <!-- APP SECTION -->
+  <div id="app-section">
+    <div class="card">
+      <div class="card-label">// compose</div>
+
+      <div class="user-badge">
+        <div class="avatar" id="user-avatar">M</div>
+        <span id="user-email">meghapradhu@gmail.com</span>
+      </div>
+
+      <div class="field">
+        <label>TO</label>
+        <input type="email" id="to" placeholder="recipient@example.com" value="meghapradhu@gmail.com"/>
+      </div>
+      <div class="field">
+        <label>SUBJECT</label>
+        <input type="text" id="subject" placeholder="Subject"/>
+      </div>
+      <div class="field">
+        <label>MESSAGE</label>
+        <textarea id="body" placeholder="Write your message..."></textarea>
+      </div>
+
+      <button class="btn" id="send-btn" onclick="sendEmail()">Send Message →</button>
+      <button class="btn btn-secondary" onclick="signOut()">Sign out</button>
+      <div id="send-status" class="status"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SCOPES = 'https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.readonly';
+  const REDIRECT_URI = window.location.href.split('?')[0].split('#')[0];
+
+  document.getElementById('redirect-uri').textContent = REDIRECT_URI;
+
+  let credentials = JSON.parse(localStorage.getItem('gmail_creds') || 'null');
+  let tokens = JSON.parse(localStorage.getItem('gmail_tokens') || 'null');
+
+  function showStatus(id, msg, type) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.className = 'status ' + type;
+  }
+
+  async function startOAuth() {
+    const clientId = document.getElementById('client-id').value.trim();
+    const clientSecret = document.getElementById('client-secret').value.trim();
+    if (!clientId || !clientSecret) {
+      showStatus('setup-status', '// error: client ID and secret required', 'error');
+      return;
+    }
+    credentials = { clientId, clientSecret };
+    localStorage.setItem('gmail_creds', JSON.stringify(credentials));
+    const params = new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: REDIRECT_URI,
+      response_type: 'code',
+      scope: SCOPES,
+      access_type: 'offline',
+      prompt: 'consent'
+    });
+    window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+  }
+
+  async function exchangeCode(code) {
+    const res = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        code,
+        client_id: credentials.clientId,
+        client_secret: credentials.clientSecret,
+        redirect_uri: REDIRECT_URI,
+        grant_type: 'authorization_code'
+      })
+    });
+    const data = await res.json();
+    if (data.access_token) {
+      tokens = data;
+      localStorage.setItem('gmail_tokens', JSON.stringify(tokens));
+      return true;
+    }
+    return false;
+  }
+
+  async function refreshToken() {
+    if (!tokens?.refresh_token) return false;
+    const res = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        refresh_token: tokens.refresh_token,
+        client_id: credentials.clientId,
+        client_secret: credentials.clientSecret,
+        grant_type: 'refresh_token'
+      })
+    });
+    const data = await res.json();
+    if (data.access_token) {
+      tokens = { ...tokens, ...data };
+      localStorage.setItem('gmail_tokens', JSON.stringify(tokens));
+      return true;
+    }
+    return false;
+  }
+
+  async function sendEmail() {
+    const to = document.getElementById('to').value.trim();
+    const subject = document.getElementById('subject').value.trim();
+    const body = document.getElementById('body').value.trim();
+
+    if (!to || !subject || !body) {
+      showStatus('send-status', '// error: all fields required', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('send-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    showStatus('send-status', '// sending...', 'info');
+
+    const email = [`To: ${to}`, `Subject: ${subject}`, 'Content-Type: text/plain; charset=utf-8', '', body].join('\n');
+    const encoded = btoa(unescape(encodeURIComponent(email))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+    let res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + tokens.access_token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ raw: encoded })
+    });
+
+    if (res.status === 401) {
+      const ok = await refreshToken();
+      if (ok) {
+        res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
+          method: 'POST',
+          headers: { Authorization: 'Bearer ' + tokens.access_token, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ raw: encoded })
+        });
+      }
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Send Message →';
+
+    if (res.ok) {
+      showStatus('send-status', '// message sent successfully ✓', 'success');
+      document.getElementById('body').value = '';
+      document.getElementById('subject').value = '';
+    } else {
+      const err = await res.json();
+      showStatus('send-status', '// error: ' + (err.error?.message || 'send failed'), 'error');
+    }
+  }
+
+  function signOut() {
+    localStorage.removeItem('gmail_tokens');
+    tokens = null;
+    document.getElementById('setup-section').style.display = 'block';
+    document.getElementById('app-section').style.display = 'none';
+  }
+
+  async function init() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+
+    if (code && credentials) {
+      window.history.replaceState({}, '', REDIRECT_URI);
+      const ok = await exchangeCode(code);
+      if (!ok) {
+        showStatus('setup-status', '// error: failed to exchange auth code', 'error');
+        return;
+      }
+    }
+
+    if (tokens?.access_token) {
+      document.getElementById('setup-section').style.display = 'none';
+      document.getElementById('app-section').style.display = 'block';
+    }
+  }
+
+  init();
+</script>
+</body>
+</html>
